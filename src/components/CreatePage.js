@@ -4,9 +4,15 @@ import { Link } from 'react-router-dom';
 class CreatePage extends React.Component {
   state = {
     options: [ {option: ''} ],
-    list: []
+    list: [],
+    question: ''
   };
 
+
+  handleUpdateQuestion = (e) => {
+    const question = e.target.value
+    this.setState({ question });
+  }
 
   // if at the bottom of the input list automatically adds a new one when you start typing
   handleAddOption = (e) => {
@@ -40,13 +46,20 @@ class CreatePage extends React.Component {
 
   handleConsole = () => {
     console.log(this.state.options)
+    console.log(this.state.question)
   }
 
   render() {
     return (
     <div>
       <form onSubmit={this.handleOnSubmit}>
-        <input placeholder='Question here (optional)'></input>
+        <input 
+          type='text'
+          value={this.state.question}
+          placeholder='Question here (optional)'
+          autoComplete='off'
+          onInput={this.handleUpdateQuestion}
+        />
         <div id='input-container'>
           {this.state.options.map((option, idx) => (
             <div key={idx}>
@@ -64,6 +77,10 @@ class CreatePage extends React.Component {
         <button>Create</button>
       </form>
       <button onClick={this.handleConsole}>Console Cheaty Button</button>
+      <div>
+      <Link to='/votepage'>Voting Page</Link>
+      <Link to='/resultspage'>Voting Page</Link>
+      </div>
     </div>
 )}};
 

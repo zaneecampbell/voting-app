@@ -1,9 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const VotePage = () => (
+export const VotePage = (props) => (
   <div>
-    VotePage
+    hi
+    <p>{props.question}</p>
   </div>
 );
 
-export default VotePage;
+const mapStateToProps = (state) => {
+  return {
+    question: state.poll.question
+  }
+}
+
+export default connect(mapStateToProps)(VotePage);
