@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import database from '../firebase/firebase';
 
 class CreatePage extends React.Component {
   state = {
@@ -8,7 +9,7 @@ class CreatePage extends React.Component {
     question: ''
   };
 
-
+  // so you can type in the question box
   handleUpdateQuestion = (e) => {
     const question = e.target.value
     this.setState({ question });
@@ -27,6 +28,7 @@ class CreatePage extends React.Component {
     }
   };
 
+  // FIX will connect to redux and not react store
   handleOnSubmit = (e) => {
     e.preventDefault();
     const optionsArray = [];
@@ -44,9 +46,15 @@ class CreatePage extends React.Component {
     });
   };
 
+  // DELETE PLEASE
   handleConsole = () => {
     console.log(this.state.options)
     console.log(this.state.question)
+    database.ref('zane').set({ name: 'Eric' }).then(() => {
+      console.log('Data saved');
+    }).catch((e) => {
+      console.log('this failed', e);
+    })
   }
 
   render() {
