@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-export const VotePage = (props) => (
+class CreatePage extends React.Component = (props) => (
   <div>
     hi
     <p>{props.question}</p>
@@ -10,7 +10,8 @@ export const VotePage = (props) => (
 
 const mapStateToProps = (state) => {
   return {
-    question: state.poll.question
+    question: state.poll.optionsData.question,
+    id: state.poll.id
   }
 }
 

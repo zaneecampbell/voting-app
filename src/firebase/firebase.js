@@ -68,7 +68,6 @@ export { firebase, googleAuthProvider ,database as default };
 
 
 
-
 // // database.ref('notes/-Krll52aVDQ3X6dOtmS7').remove();
 
 // // database.ref('notes').push({

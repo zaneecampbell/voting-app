@@ -1,10 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import database from '../firebase/firebase';
+import moment from 'moment';
+import { startAddOptions } from '../actions/poll';
 
 class CreatePage extends React.Component {
   state = {
-    options: [ {option: ''} ],
+    options: [ {option: ''}, {option: ''}, {option: ''} ],
     list: [],
     question: ''
   };
@@ -33,7 +36,7 @@ class CreatePage extends React.Component {
     e.preventDefault();
     const optionsArray = [];
     const options = this.state.options.map((option) => {
-      // Removes blank answers from the choices
+      // Removes blank answers from the choices then adds choices to an array
       if (option.option.trim() != '') {
         return optionsArray.push(option)
       } else {
@@ -44,18 +47,23 @@ class CreatePage extends React.Component {
     this.setState({
       list: this.state.list.concat(optionsArray)
     });
+
+    // Sends choices and question to firebase needs to go through redux
+    this.props.startAddOptions({
+      question: this.state.question,
+      options: optionsArray
+    });
+
+    // Takes user to the voting page with the unique ID for the question
+    setTimeout(() => {
+      this.props.history.push(`/votepage/${this.props.id}`);
+    }, 200);
   };
 
   // DELETE PLEASE
   handleConsole = () => {
-    console.log(this.state.options)
-    console.log(this.state.question)
-    database.ref('zane').set({ name: 'Eric' }).then(() => {
-      console.log('Data saved');
-    }).catch((e) => {
-      console.log('this failed', e);
-    })
-  }
+    console.log(this.props.id)
+  };
 
   render() {
     return (
@@ -92,4 +100,14 @@ class CreatePage extends React.Component {
     </div>
 )}};
 
-export default CreatePage;
+const mapStateToProps = (state) => {
+  return {
+      id: state.poll.id
+  }
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  startAddOptions: (optionsData) => dispatch(startAddOptions(optionsData)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);

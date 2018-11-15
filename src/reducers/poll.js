@@ -1,11 +1,16 @@
 const pollDefaultState = {
-    question: 'hello there stranga'
+    id: 'placeholder',
+    optionsData: {
+        options: ['placeholder'],
+        question: 'from redux with love'
+    }
 };
 
 export default (state = pollDefaultState, action) => {
     switch (action.type) {
         case 'ADD':
-            return state;
+        console.log(action.optionsData)
+            return state = action.optionsData;
         default:
             return state;
     }
