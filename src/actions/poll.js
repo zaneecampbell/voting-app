@@ -13,7 +13,7 @@ export const startAddOptions = (optionsData) => {
             options = [],
             id = ''
         } = optionsData;
-        const Data = { question, ...options, id}
+        const Data = { question, ...options, id }
 
         return database.ref(`polls`).push({
             question: optionsData.question,
@@ -24,6 +24,24 @@ export const startAddOptions = (optionsData) => {
                 optionsData
             }));
         });
+    }
+}
+
+export const setOptions = (optionsData) => ({
+    type: 'SET',
+    optionsData
+});
+
+export const startSetOptions = (id) => {
+    return (dispatch) => {
+        return database.ref(`polls/${id}`)
+            .once('value')
+            .then((snapshot) => {
+                const optionsData = snapshot.val();
+                dispatch(setOptions({optionsData}));
+            }).catch((e) => {
+                console.log('Error fetching data', e);
+            });
     }
 }
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { startSetOptions } from '../actions/poll';
+import database from '../firebase/firebase';
 
 class VotePage extends React.Component {
   state = {
@@ -7,18 +9,33 @@ class VotePage extends React.Component {
   }
 
   handleCheat = () => {
+    console.log(this.props.options)
   };
 
+  // grabs the last 20 characters from the url to get ID to load from firebase
   componentWillMount() {
-    const id = window.location.href
-    this.setState(() => ({ id }))
+    const id = window.location.href.slice(-20)
+    this.setState({ id });
+    this.props.startSetOptions(id);
   };
 
   render() {
     return (
       <div>
         {this.props.question}
-        <button onClick={this.handleCheat}>Cheaty Button</button>
+        <form>
+          {this.props.options.map((option, idx) => (
+            <div key={idx}>
+              <input
+                id={idx}
+                type='radio'
+                value={option.option}
+              />
+              {option.option}
+            </div>
+          ))}
+        </form>
+        <button onClick={this.handleCheat}>cheaty button</button>
       </div>
     )
   }
@@ -26,8 +43,13 @@ class VotePage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    question: state.poll.optionsData.question
+    question: state.poll.optionsData.question,
+    options: state.poll.optionsData.options
   }
 }
 
-export default connect(mapStateToProps)(VotePage);
+const mapDispatchToProps = (dispatch) => ({
+  startSetOptions: (id) => dispatch(startSetOptions(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(VotePage);

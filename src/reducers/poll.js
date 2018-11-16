@@ -9,7 +9,8 @@ const pollDefaultState = {
 export default (state = pollDefaultState, action) => {
     switch (action.type) {
         case 'ADD':
-        console.log(action.optionsData)
+            return state = action.optionsData;
+        case 'SET':
             return state = action.optionsData;
         default:
             return state;
