@@ -26,12 +26,10 @@ class VotePage extends React.Component {
         <form>
           {this.props.options.map((option, idx) => (
             <div key={idx}>
-              <input
-                id={idx}
-                type='radio'
-                value={option.option}
-              />
-              {option.option}
+              <label>
+                <input id={idx} type='radio' value={option.option} name={this.props.question}/>
+                {option.option}
+              </label>
             </div>
           ))}
         </form>
