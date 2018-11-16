@@ -7,7 +7,7 @@ import { startAddOptions } from '../actions/poll';
 
 class CreatePage extends React.Component {
   state = {
-    options: [ {option: ''}, {option: ''}, {option: ''} ],
+    options: [ {option: '', count: 0}, {option: '', count: 0}, {option: '', count: 0} ],
     list: [],
     question: ''
   };
@@ -27,23 +27,27 @@ class CreatePage extends React.Component {
     });
 
     if (id == this.state.options.length - 1) {
-      this.setState({ options: this.state.options.concat([ {option: ''} ])});
+      this.setState({ options: this.state.options.concat([ {option: '', count: 0} ])});
     }
   };
 
-  // FIX will connect to redux and not react store
+  // Submits data to firebase and redux then takes you to the votepage
   handleOnSubmit = (e) => {
     e.preventDefault();
     const optionsArray = [];
+    let number = 0;
     const options = this.state.options.map((option) => {
       // Removes blank answers from the choices then adds choices to an array
       if (option.option.trim() != '') {
+        option.firebaseIndex = number;
+        number = number + 1;
         return optionsArray.push(option)
       } else {
         // do nothing
       }
     });
 
+    // Used for testing on one page
     this.setState({
       list: this.state.list.concat(optionsArray)
     });
@@ -77,6 +81,7 @@ class CreatePage extends React.Component {
           onInput={this.handleUpdateQuestion}
         />
         <div id='input-container'>
+        {/* Maps out option inputs dynamically as more are needed */}
           {this.state.options.map((option, idx) => (
             <div key={idx}>
               <input
@@ -92,6 +97,7 @@ class CreatePage extends React.Component {
         </div>
         <button>Create</button>
       </form>
+      {/* DELETE PLEASE */}
       <button onClick={this.handleConsole}>Console Cheaty Button</button>
       <div>
       <Link to='/votepage'>Voting Page</Link>
@@ -111,3 +117,5 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);
+
+// Add Error for now question and to have at least 2 options //

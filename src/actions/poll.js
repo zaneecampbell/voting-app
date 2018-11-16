@@ -1,5 +1,6 @@
 import database from '../firebase/firebase'
 
+// Adds options from CreatePage to firebase and redux
 export const addOptions = (optionsData, id) => ({
     type: 'ADD',
     optionsData,
@@ -27,6 +28,7 @@ export const startAddOptions = (optionsData) => {
     }
 }
 
+// Pulls option information for Votepage and ResultsPage from firebase
 export const setOptions = (optionsData) => ({
     type: 'SET',
     optionsData
@@ -38,12 +40,29 @@ export const startSetOptions = (id) => {
             .once('value')
             .then((snapshot) => {
                 const optionsData = snapshot.val();
-                dispatch(setOptions({optionsData}));
+                dispatch(setOptions({ optionsData }));
             }).catch((e) => {
                 console.log('Error fetching data', e);
             });
-    }
-}
+    };
+};
+
+// Updates firebase vote count for option that was selected (no reason to set redux since I'll be pulling from firebase on the next page regardless can reuse startSetOption for ResultsPage)
+export const startUpdateOptions = (selected, id) => {
+    const index = selected.slice(-1);
+    return (dispatch) => {
+        // obtains the original count value
+        return database.ref(`polls/${id}/options/${index}/count`)
+            .once('value')
+            .then((snapshot) => {
+                const count = snapshot.val();
+                // updates count value
+                return database.ref(`polls/${id}/options/${index}`).update({
+                    count: count + 1
+                }).catch((e) => { console.log('Error updating data', e) })
+            }).catch((e) => { console.log('Error updating data', e) })
+    };
+};
 
 //     const newPoll = database.ref(`polls`).push({
 //         question: this.state.question,
