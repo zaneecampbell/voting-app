@@ -51,17 +51,12 @@ export const startSetOptions = (id) => {
 export const startUpdateOptions = (selected, id) => {
     const index = selected.slice(-1);
     return (dispatch) => {
-        // obtains the original count value
-        return database.ref(`polls/${id}/options/${index}/count`)
-            .once('value')
-            .then((snapshot) => {
-                const count = snapshot.val();
-                // updates count value
-                return database.ref(`polls/${id}/options/${index}`).update({
-                    count: count + 1
-                }).catch((e) => { console.log('Error updating data', e) })
-            }).catch((e) => { console.log('Error updating data', e) })
-    };
+        return database.ref(`polls/${id}/options/${index}/count`).transaction((count) => {
+            return count + 1;
+        }).catch((e) => {
+            console.log('Error adding count', e);
+        });
+    }
 };
 
 //     const newPoll = database.ref(`polls`).push({
