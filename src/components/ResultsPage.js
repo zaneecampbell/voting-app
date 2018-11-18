@@ -7,12 +7,14 @@ export class ResultsPage extends React.Component {
     id: ''
   }
 
+  // on page load fetches voting data from firebase using the key from the url then sets the options
   componentWillMount() {
     const id = window.location.href.slice(-20)
     this.setState({ id });
     this.props.startSetOptions(id);
   };
 
+  // enables a listener on component mount that keeps track of the vote count for each option
   componentDidMount() {
     this.props.startRealTimeOptions(this.state.id, this.props.question);
   }
