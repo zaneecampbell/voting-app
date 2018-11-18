@@ -59,6 +59,16 @@ export const startUpdateOptions = (selected, id) => {
     }
 };
 
+// On ResultsPage updates vote count in real time with listener from firebase
+export const startRealTimeOptions = (id) => {
+    return (dispatch) => {
+        return database.ref(`polls/${id}`).on('value', (snapshot) => {
+            const optionsData = snapshot.val();
+            dispatch(setOptions({optionsData}));
+        });
+    }
+}
+
 //     const newPoll = database.ref(`polls`).push({
 //         question: this.state.question,
 //         options: optionsArray

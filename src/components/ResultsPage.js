@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { startSetOptions } from '../actions/poll';
+import { startSetOptions, startRealTimeOptions } from '../actions/poll';
 
 export class ResultsPage extends React.Component {
   state = {
@@ -13,14 +13,25 @@ export class ResultsPage extends React.Component {
     this.props.startSetOptions(id);
   };
 
+  componentDidMount() {
+    this.props.startRealTimeOptions(this.state.id, this.props.question);
+  }
+
   handleCheat = () => {
-    console.log(this.props.options)
+    console.log(this.state.id)
   };
 
   render() {
     return (
       <div>
-        {this.props.question}
+        <h1>{this.props.question}</h1>
+        {
+          this.props.options.map((option, idx) => (
+            <div key={idx}>
+              {option.option} {option.count}
+            </div>
+          ))
+        }
         <button onClick={this.handleCheat}>Cheaty Button</button>
       </div>
     )
@@ -36,6 +47,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   startSetOptions: (id) => dispatch(startSetOptions(id)),
+  startRealTimeOptions: (id) => dispatch(startRealTimeOptions(id))
 });
 
 
