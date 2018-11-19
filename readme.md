@@ -1,7 +1,10 @@
-# Git Commands
+Voting App built using React with React-Redux and React-Router.
+Uses firebase as a database for unique urls to share your polls with anyone.
+ResultsPage updates in realtime when someone votes.
 
-git init - Create a new git repo
-git status - View the changes to your project code
-git add - Add files to staging area
-git commit - Creates a new commit with files from staging area
-git log - View recent commits
+Usage:
+    yarn run dev-server
+    Open Browser
+    Go to: localhost:8080
+
+Currently learning Material UI to style
