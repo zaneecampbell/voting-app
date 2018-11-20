@@ -43,7 +43,7 @@ class CreatePage extends React.Component {
         number = number + 1;
         return optionsArray.push(option)
       } else {
-        // do nothing
+        // don't add it to the array
       }
     });
 
@@ -76,7 +76,7 @@ class CreatePage extends React.Component {
         <input 
           type='text'
           value={this.state.question}
-          placeholder='Question here (optional)'
+          placeholder='Question here'
           autoComplete='off'
           onInput={this.handleUpdateQuestion}
         />
@@ -118,4 +118,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);
 
-// Add Error for now question and to have at least 2 options //
+// Add Error for no question and to have at least 2 options //

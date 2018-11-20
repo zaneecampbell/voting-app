@@ -78,3 +78,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(VotePage);
 
 // BUG if more then one option is the same string multiple radio buttons will become checked for each same option
 // fix by not allowing more then one of the same answers on the createpage probably
+// Add only let people vote once based on either localstorage or IP detection

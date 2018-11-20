@@ -1,12 +1,13 @@
 import database from '../firebase/firebase'
 
-// Adds options from CreatePage to firebase and redux
+//  Adds options from CreatePage to redux (this might be unnecessary since I set it on votepage anyways)
 export const addOptions = (optionsData, id) => ({
     type: 'ADD',
     optionsData,
     id
 });
 
+// Adds options from CreatePage to firebase
 export const startAddOptions = (optionsData) => {
     return (dispatch) => {
         const {
@@ -28,12 +29,13 @@ export const startAddOptions = (optionsData) => {
     }
 }
 
-// Pulls option information for Votepage and ResultsPage from firebase
+// Adds data to redux that was pulled from firebase
 export const setOptions = (optionsData) => ({
     type: 'SET',
     optionsData
 });
 
+// Pulls option information for Votepage and ResultsPage from firebase
 export const startSetOptions = (id) => {
     return (dispatch) => {
         return database.ref(`polls/${id}`)
