@@ -118,4 +118,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);
 
+
+
 // Add Error for no question and to have at least 2 options //

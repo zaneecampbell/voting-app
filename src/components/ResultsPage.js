@@ -14,7 +14,7 @@ export class ResultsPage extends React.Component {
     this.props.startSetOptions(id);
   };
 
-  // enables a listener on component mount that keeps track of the vote count for each option
+  // enables a listener on component mount that keeps track of the vote count for each option in real time
   componentDidMount() {
     this.props.startRealTimeOptions(this.state.id, this.props.question);
   }
