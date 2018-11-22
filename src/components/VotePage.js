@@ -75,5 +75,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(VotePage);
 
 
-
-// Add only let people vote once using localstorage
+// Only let people vote once by adding a value into local storage for that particular poll (last thing since testing easier without)

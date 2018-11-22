@@ -7,7 +7,7 @@ import { startAddOptions } from '../actions/poll';
 
 class CreatePage extends React.Component {
   state = {
-    options: [ {option: '', count: 0}, {option: '', count: 0}, {option: '', count: 0} ],
+    options: [{ option: '', count: 0 }, { option: '', count: 0 }, { option: '', count: 0 }],
     list: [],
     question: ''
   };
@@ -27,7 +27,7 @@ class CreatePage extends React.Component {
     });
 
     if (id == this.state.options.length - 1) {
-      this.setState({ options: this.state.options.concat([ {option: '', count: 0} ])});
+      this.setState({ options: this.state.options.concat([{ option: '', count: 0 }]) });
     }
   };
 
@@ -47,21 +47,26 @@ class CreatePage extends React.Component {
       }
     });
 
-    // Used for testing on one page
-    this.setState({
-      list: this.state.list.concat(optionsArray)
-    });
+    // Makes it so you need at least 2 options and a question
+    if (this.state.question === '' || optionsArray.length < 2) {
+      alert("Please add a question and at least 2 options")
+    } else {
+      // Used for testing on one page
+      this.setState({
+        list: this.state.list.concat(optionsArray)
+      });
 
-    // Sends choices and question to firebase needs to go through redux
-    this.props.startAddOptions({
-      question: this.state.question,
-      options: optionsArray
-    });
+      // Sends choices and question to firebase needs to go through redux
+      this.props.startAddOptions({
+        question: this.state.question,
+        options: optionsArray
+      });
 
-    // Takes user to the voting page with the unique ID for the question
-    setTimeout(() => {
-      this.props.history.push(`/votepage/${this.props.id}`);
-    }, 200);
+      // Takes user to the voting page with the unique ID for the question
+      setTimeout(() => {
+        this.props.history.push(`/votepage/${this.props.id}`);
+      }, 200);
+    }
   };
 
   // DELETE PLEASE
@@ -71,44 +76,46 @@ class CreatePage extends React.Component {
 
   render() {
     return (
-    <div>
-      <form onSubmit={this.handleOnSubmit}>
-        <input 
-          type='text'
-          value={this.state.question}
-          placeholder='Question here'
-          autoComplete='off'
-          onInput={this.handleUpdateQuestion}
-        />
-        <div id='input-container'>
-        {/* Maps out option inputs dynamically as more are needed */}
-          {this.state.options.map((option, idx) => (
-            <div key={idx}>
-              <input
-                id={idx}
-                type='text'
-                value={option.option}
-                placeholder={`Option ${idx}`}
-                onInput={this.handleAddOption}
-                autoComplete='off'
-              />
-            </div>
-          ))}
-        </div>
-        <button>Create</button>
-      </form>
-      {/* DELETE PLEASE */}
-      <button onClick={this.handleConsole}>Console Cheaty Button</button>
       <div>
-      <Link to='/votepage'>Voting Page</Link>
-      <Link to='/resultspage'>Voting Page</Link>
+        <form onSubmit={this.handleOnSubmit}>
+          <input
+            type='text'
+            value={this.state.question}
+            placeholder='Question here'
+            autoComplete='off'
+            onInput={this.handleUpdateQuestion}
+          />
+          <div id='input-container'>
+            {/* Maps out option inputs dynamically as more are needed */}
+            {this.state.options.map((option, idx) => (
+              <div key={idx}>
+                <input
+                  id={idx}
+                  type='text'
+                  value={option.option}
+                  placeholder={`Option ${idx + 1}`}
+                  onInput={this.handleAddOption}
+                  autoComplete='off'
+                />
+              </div>
+            ))}
+          </div>
+          <button>Create</button>
+        </form>
+        {/* DELETE PLEASE */}
+        <button onClick={this.handleConsole}>Console Cheaty Button</button>
+        <div>
+          <Link to='/votepage'>Voting Page</Link>
+          <Link to='/resultspage'>Voting Page</Link>
+        </div>
       </div>
-    </div>
-)}};
+    )
+  }
+};
 
 const mapStateToProps = (state) => {
   return {
-      id: state.poll.id
+    id: state.poll.id
   }
 }
 
@@ -117,7 +124,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);
-
-
-
-// Add Error for no question and to have at least 2 options //

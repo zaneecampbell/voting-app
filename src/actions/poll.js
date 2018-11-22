@@ -70,11 +70,3 @@ export const startRealTimeOptions = (id) => {
         });
     }
 }
-
-//     const newPoll = database.ref(`polls`).push({
-//         question: this.state.question,
-//         options: optionsArray
-//     });
-
-//     const pollId = newPoll.key
-// }
