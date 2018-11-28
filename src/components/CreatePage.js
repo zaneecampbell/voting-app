@@ -5,6 +5,8 @@ import database from '../firebase/firebase';
 import moment from 'moment';
 import { startAddOptions } from '../actions/poll';
 import Header from './Header';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 class CreatePage extends React.Component {
   state = {
@@ -23,9 +25,11 @@ class CreatePage extends React.Component {
   handleAddOption = (e) => {
     const id = e.target.id
     const text = e.target.value
-    this.setState(() => {
-      this.state.options[id].option = text
+    this.setState({
+      ...this.state.options[id].option.concat(text)
     });
+
+    this.state.options[id].option = text
 
     if (id == this.state.options.length - 1) {
       this.setState({ options: this.state.options.concat([{ option: '', count: 0 }]) });
@@ -73,31 +77,39 @@ class CreatePage extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleOnSubmit}>
-          <input
-            type='text'
-            value={this.state.question}
-            placeholder='Question here'
-            autoComplete='off'
-            onInput={this.handleUpdateQuestion}
-          />
-          <div id='input-container'>
-            {/* Maps out option inputs dynamically as more are needed */}
-            {this.state.options.map((option, idx) => (
-              <div key={idx}>
-                <input
-                  id={idx}
-                  type='text'
-                  value={option.option}
-                  placeholder={`Option ${idx + 1}`}
-                  onInput={this.handleAddOption}
-                  autoComplete='off'
-                />
-              </div>
-            ))}
-          </div>
-          <button>Create</button>
-        </form>
+        <Grid
+        container
+        direction="column"
+        justify="space-evenly"
+        alignItems="center"
+        >
+          <Header />
+          <form onSubmit={this.handleOnSubmit}>
+            <input
+              type='text'
+              value={this.state.question}
+              placeholder='Question here'
+              autoComplete='off'
+              onInput={this.handleUpdateQuestion}
+            />
+            <div id='input-container'>
+              {/* Maps out option inputs dynamically as more are needed */}
+              {this.state.options.map((option, idx) => (
+                <div key={idx}>
+                  <input
+                    id={idx}
+                    type='text'
+                    value={option.option}
+                    placeholder={`Option ${idx + 1}`}
+                    onInput={this.handleAddOption}
+                    autoComplete='off'
+                  />
+                </div>
+              ))}
+            </div>
+            <button>Create</button>
+          </form>
+        </Grid>
       </div>
     )
   }

@@ -1,8 +1,8 @@
 const pollDefaultState = {
     id: 'placeholder',
     optionsData: {
-        options: ['placeholder'],
-        question: 'from redux with love'
+        options: [{ option: '', count: 0 }, { option: '', count: 0 }, { option: '', count: 0 }],
+        question: 'Loading...'
     }
 };
 

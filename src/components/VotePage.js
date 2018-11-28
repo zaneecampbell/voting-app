@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { startSetOptions, startUpdateOptions } from '../actions/poll';
 import database from '../firebase/firebase';
 import Header from './Header';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
 
 class VotePage extends React.Component {
   state = {
@@ -15,6 +18,11 @@ class VotePage extends React.Component {
     const id = window.location.href.slice(-20)
     this.setState({ id });
     this.props.startSetOptions(id);
+    setTimeout(() => {
+      if (this.props.question === 'Loading...') {
+        this.props.history.push('/notfoundpage')
+      }
+    }, 300)
   };
 
   // takes the selected radio button and sets them equal to selected state
@@ -34,22 +42,22 @@ class VotePage extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.props.question}</h1>
-        <form onSubmit={this.handleOnSubmit}>
-          {/* Maps out the options that were pulled from firebase then added to redux with radio buttons and labels */}
-          {this.props.options.map((option, idx) => (
-            <div key={idx}>
-              <label>
-                {/* BAD takes the option object and creates a value string by adding the option text and the firebaseIndex together */}
-                <input type='radio' value={option.firebaseIndex} checked={this.state.selected === `${option.firebaseIndex}`} onChange={this.handleChange} />
-                {option.option}
-              </label>
-            </div>
-          ))}
-          <button type='submit'>Submit</button>
-        </form>
-      </div>
+        <div>
+          <h1>{this.props.question}</h1>
+          <form onSubmit={this.handleOnSubmit}>
+            {/* Maps out the options that were pulled from firebase then added to redux with radio buttons and labels */}
+            {this.props.options.map((option, idx) => (
+              <div key={idx}>
+                <label>
+                  {/* BAD takes the option object and creates a value string by adding the option text and the firebaseIndex together */}
+                  <input type='radio' value={option.firebaseIndex} checked={this.state.selected === `${option.firebaseIndex}`} onChange={this.handleChange} />
+                  {option.option}
+                </label>
+              </div>
+            ))}
+            <button type='submit'>Submit</button>
+          </form>
+        </div>
     )
   }
 }
