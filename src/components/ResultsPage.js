@@ -19,10 +19,6 @@ export class ResultsPage extends React.Component {
     this.props.startRealTimeOptions(this.state.id, this.props.question);
   }
 
-  handleCheat = () => {
-    console.log(this.state.id)
-  };
-
   render() {
     return (
       <div>
@@ -34,7 +30,6 @@ export class ResultsPage extends React.Component {
             </div>
           ))
         }
-        <button onClick={this.handleCheat}>Cheaty Button</button>
       </div>
     )
   }

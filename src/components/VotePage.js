@@ -31,11 +31,6 @@ class VotePage extends React.Component {
     }, 200);
   };
 
-  // DELETE PLEASE
-  handleCheat = () => {
-    console.log(this.state.selected, this.state.id)
-  };
-
   render() {
     return (
       <div>
@@ -53,8 +48,6 @@ class VotePage extends React.Component {
           ))}
           <button type='submit'>Submit</button>
         </form>
-        {/* DELETE PLEASE */}
-        <button onClick={this.handleCheat}>cheaty button</button>
       </div>
     )
   }

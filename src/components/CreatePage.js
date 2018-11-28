@@ -69,11 +69,6 @@ class CreatePage extends React.Component {
     }
   };
 
-  // DELETE PLEASE
-  handleConsole = () => {
-    console.log(this.props.id)
-  };
-
   render() {
     return (
       <div>
@@ -102,12 +97,6 @@ class CreatePage extends React.Component {
           </div>
           <button>Create</button>
         </form>
-        {/* DELETE PLEASE */}
-        <button onClick={this.handleConsole}>Console Cheaty Button</button>
-        <div>
-          <Link to='/votepage'>Voting Page</Link>
-          <Link to='/resultspage'>Voting Page</Link>
-        </div>
       </div>
     )
   }
