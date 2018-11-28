@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import database from '../firebase/firebase';
 import moment from 'moment';
 import { startAddOptions } from '../actions/poll';
+import Header from './Header';
 
 class CreatePage extends React.Component {
   state = {

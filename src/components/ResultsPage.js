@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { startSetOptions, startRealTimeOptions } from '../actions/poll';
+import Header from './Header';
 
 export class ResultsPage extends React.Component {
   state = {

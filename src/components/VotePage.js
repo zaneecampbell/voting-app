@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { startSetOptions, startUpdateOptions } from '../actions/poll';
 import database from '../firebase/firebase';
+import Header from './Header';
 
 class VotePage extends React.Component {
   state = {
