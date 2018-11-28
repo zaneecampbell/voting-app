@@ -51,7 +51,7 @@ export const startSetOptions = (id) => {
 
 // Updates firebase vote count for option that was selected (no reason to set redux since I'll be pulling from firebase on the next page regardless can reuse startSetOption for ResultsPage)
 export const startUpdateOptions = (selected, id) => {
-    const index = selected.slice(-1);
+    const index = selected;
     return (dispatch) => {
         return database.ref(`polls/${id}/options/${index}/count`).transaction((count) => {
             return count + 1;

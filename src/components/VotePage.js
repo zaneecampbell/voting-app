@@ -42,7 +42,7 @@ class VotePage extends React.Component {
             <div key={idx}>
               <label>
                 {/* BAD takes the option object and creates a value string by adding the option text and the firebaseIndex together */}
-                <input type='radio' value={`${option.option}` + `${option.firebaseIndex}`} checked={this.state.selected === `${option.option}` + `${option.firebaseIndex}`} onChange={this.handleChange} />
+                <input type='radio' value={option.firebaseIndex} checked={this.state.selected === `${option.firebaseIndex}`} onChange={this.handleChange} />
                 {option.option}
               </label>
             </div>
