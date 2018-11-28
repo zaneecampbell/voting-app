@@ -7,7 +7,16 @@ import { startAddOptions } from '../actions/poll';
 import Header from './Header';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Input from '@material-ui/core/Input';
+import { withStyles } from '@material-ui/core/styles';
 
+const styles = theme => ({
+  textfield: {
+    fontSize: '3.5vw'
+  }
+});
+
+// CreatePage starts here ----------------------------------------------------------------------
 class CreatePage extends React.Component {
   state = {
     options: [{ option: '', count: 0 }, { option: '', count: 0 }, { option: '', count: 0 }],
@@ -75,40 +84,50 @@ class CreatePage extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <div>
         <Grid
         container
         direction="column"
-        justify="space-evenly"
+        justify="space-between"
         alignItems="center"
+        spacing={40}
         >
+        <Grid item>
           <Header />
-          <form onSubmit={this.handleOnSubmit}>
-            <input
-              type='text'
-              value={this.state.question}
-              placeholder='Question here'
-              autoComplete='off'
-              onInput={this.handleUpdateQuestion}
-            />
-            <div id='input-container'>
-              {/* Maps out option inputs dynamically as more are needed */}
-              {this.state.options.map((option, idx) => (
-                <div key={idx}>
-                  <input
-                    id={idx}
-                    type='text'
-                    value={option.option}
-                    placeholder={`Option ${idx + 1}`}
-                    onInput={this.handleAddOption}
-                    autoComplete='off'
-                  />
-                </div>
-              ))}
-            </div>
-            <button>Create</button>
-          </form>
+        </ Grid>
+          <Grid item>
+            <form onSubmit={this.handleOnSubmit}>
+              <Input
+                classes={{root: classes.textfield}}
+                style={{marginTop: '50px', marginBottom: '50px'}}
+                type='text'
+                value={this.state.question}
+                placeholder='Question here'
+                autoComplete='off'
+                onInput={this.handleUpdateQuestion}
+              />
+              <div id='input-container'>
+                {/* Maps out option inputs dynamically as more are needed */}
+                {this.state.options.map((option, idx) => (
+                  <div key={idx}>
+                    <Input
+                      classes={{root: classes.textfield}}
+                      id={`${idx}`}
+                      type='text'
+                      value={option.option}
+                      placeholder={`Option ${idx + 1}`}
+                      onInput={this.handleAddOption}
+                      autoComplete='off'
+                    />
+                  </div>
+                ))}
+              </div>
+              <button>Create</button>
+            </form>
+          </Grid>
         </Grid>
       </div>
     )
@@ -125,4 +144,4 @@ const mapDispatchToProps = (dispatch) => ({
   startAddOptions: (optionsData) => dispatch(startAddOptions(optionsData)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreatePage);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CreatePage));
