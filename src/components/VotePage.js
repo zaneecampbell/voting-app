@@ -125,6 +125,9 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(VotePage));
 
 // BUG Turn localstorage id into an object to add more ids too so people cant go to a different poll vote then come back and vote again
+    // check in new object if id exists then set vote state to true or false based on that
 // BUG if visiting invald votepage url doesn't push to notfoundpage
 
 // TODO change radio button to something nicer looking
+
+// FUTURE set it based on IP address so people cant clear localstorage

@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { VictoryPie } from 'victory';
 
 const styles = theme => ({
   paper: {
@@ -19,7 +20,8 @@ const styles = theme => ({
 
 export class ResultsPage extends React.Component {
   state = {
-    id: ''
+    id: '',
+    data: []
   }
 
   // on page load fetches voting data from firebase using the key from the url then sets the options
@@ -32,8 +34,27 @@ export class ResultsPage extends React.Component {
   // enables a listener on component mount that keeps track of the vote count for each option in real time
   componentDidMount() {
     this.props.startRealTimeOptions(this.state.id, this.props.question);
+    console.log(this.props.options)
+
+    // Updates the piechart in real time
+    this.pieChartUpdater = setInterval(() => {
+      const optionsForData = []
+
+      this.props.options.map((option, idx) => {
+        optionsForData.push({x: idx, y: option.count, label: option.option})
+      })
+      this.setState({ data: optionsForData })
+    }, 1000)
   }
 
+  // clears piechart updating (no memory leak!)
+  componentWillUnmount() {
+    clearInterval(this.pieChartUpdater)
+  }
+
+  cheat = () => {
+    console.log(this.state.data)
+  }
   render() {
     const { classes } = this.props;
 
@@ -56,6 +77,10 @@ export class ResultsPage extends React.Component {
                 ))
               }
             </Paper>
+            <VictoryPie
+              data={this.state.data}
+            />
+            <button onClick={this.cheat}>Cheat</button>
         </Grid>
       </div>
     )
@@ -76,3 +101,5 @@ const mapDispatchToProps = (dispatch) => ({
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ResultsPage));
+
+// BUG when piechart updates TypeError: Cannot read property 'indexOf' of null, during update

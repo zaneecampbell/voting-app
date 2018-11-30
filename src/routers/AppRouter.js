@@ -5,8 +5,8 @@ import NotFoundPage from '../components/NotFoundPage';
 import CreatePage from '../components/CreatePage';
 import ResultsPage from '../components/ResultsPage';
 import VotePage from '../components/VotePage';
-import PrivateRoute from './PrivateRoute';
-import PublicRoute from './PublicRoute';
+// import PrivateRoute from './PrivateRoute';
+// import PublicRoute from './PublicRoute';
 
 export const history = createHistory();
 
