@@ -5,7 +5,21 @@ import database from '../firebase/firebase';
 import Header from './Header';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
+import Radio from '@material-ui/core/Radio';
+import Typography from '@material-ui/core/Typography';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { withStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
+const styles = theme => ({
+  radioLabel: {
+    fontSize: '3.5vw'
+  },
+  buttonLabel: {
+    fontSize: '4.5vw'
+  }
+});
 
 class VotePage extends React.Component {
   state = {
@@ -18,11 +32,6 @@ class VotePage extends React.Component {
     const id = window.location.href.slice(-20)
     this.setState({ id });
     this.props.startSetOptions(id);
-    setTimeout(() => {
-      if (this.props.question === 'Loading...') {
-        this.props.history.push('/notfoundpage')
-      }
-    }, 300)
   };
 
   // takes the selected radio button and sets them equal to selected state
@@ -41,22 +50,38 @@ class VotePage extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
         <div>
-          <h1>{this.props.question}</h1>
-          <form onSubmit={this.handleOnSubmit}>
-            {/* Maps out the options that were pulled from firebase then added to redux with radio buttons and labels */}
-            {this.props.options.map((option, idx) => (
-              <div key={idx}>
-                <label>
-                  {/* BAD takes the option object and creates a value string by adding the option text and the firebaseIndex together */}
-                  <input type='radio' value={option.firebaseIndex} checked={this.state.selected === `${option.firebaseIndex}`} onChange={this.handleChange} />
-                  {option.option}
-                </label>
-              </div>
-            ))}
-            <button type='submit'>Submit</button>
-          </form>
+          <Grid
+          container
+          direction="column"
+          justify="space-between"
+          alignItems="center"
+          spacing={40}
+          >
+            <Typography style={{marginTop: '50px', fontSize: '5.5vw'}}>{this.props.question}</Typography>
+            <form onSubmit={this.handleOnSubmit}>
+                {/* Maps out the options that were pulled from firebase then added to redux with radio buttons and labels */}
+                  <FormGroup style={{marginTop: '50px'}}>
+                    {this.props.options.map((option, idx) => (
+                      <div key={idx}>
+                        <FormControlLabel classes={{label: classes.radioLabel}} control={
+                            <Radio 
+                            type='radio' 
+                            value={option.firebaseIndex} 
+                            checked={this.state.selected === `${option.firebaseIndex}`} 
+                            onChange={this.handleChange} 
+                            />}
+                          label={option.option}
+                        />
+                      </div>
+                    ))}
+                <Button style={{marginTop: '15px'}} classes={{label: classes.buttonLabel}} type='submit'>Submit</Button>
+                </FormGroup>
+            </form>
+          </Grid>
         </div>
     )
   }
@@ -74,7 +99,9 @@ const mapDispatchToProps = (dispatch) => ({
   startUpdateOptions: (selected, id) => dispatch(startUpdateOptions(selected, id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VotePage);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(VotePage));
 
 
 // Only let people vote once by adding a value into local storage for that particular poll (last thing since testing easier without)
+
+// BUG if visiting invald votepage url doesn't push to notfoundpage
