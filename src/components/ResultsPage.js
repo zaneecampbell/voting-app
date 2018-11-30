@@ -41,7 +41,11 @@ export class ResultsPage extends React.Component {
       const optionsForData = []
 
       this.props.options.map((option, idx) => {
-        optionsForData.push({x: idx, y: option.count, label: option.option})
+        if (option.count != 0) {
+          optionsForData.push({x: idx, y: option.count, label: option.option})
+        } else {
+          // Do nothing with it
+        }
       })
       this.setState({ data: optionsForData })
     }, 1000)
@@ -52,9 +56,6 @@ export class ResultsPage extends React.Component {
     clearInterval(this.pieChartUpdater)
   }
 
-  cheat = () => {
-    console.log(this.state.data)
-  }
   render() {
     const { classes } = this.props;
 
@@ -102,4 +103,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ResultsPage));
 
-// BUG when piechart updates TypeError: Cannot read property 'indexOf' of null, during update
+// Functionally Done
+
+// Style piechart

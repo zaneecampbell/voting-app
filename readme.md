@@ -10,5 +10,3 @@ From CMD:
 yarn run dev-server,
 Open Browser,
 Go to: localhost:8080
-
-Going to add pie chart on Results Page
