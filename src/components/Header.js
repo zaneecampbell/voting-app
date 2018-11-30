@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 
 export const Header = () => (
   <Typography style={{marginTop: '50px', fontSize: '5.5vw'}}>
-    Voting App WIP
+    Voting App
   </Typography>
 );
 

@@ -8,11 +8,15 @@ import Header from './Header';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
+import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   textfield: {
     fontSize: '3.5vw'
+  },
+  buttonLabel: {
+    fontSize: '2.5vw'
   }
 });
 
@@ -125,7 +129,7 @@ class CreatePage extends React.Component {
                   </div>
                 ))}
               </div>
-              <button>Create</button>
+              <Button style={{marginTop: '15px'}} classes={{label: classes.buttonLabel}} type='submit'>Create</Button>
             </form>
           </Grid>
         </Grid>

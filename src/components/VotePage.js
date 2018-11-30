@@ -17,14 +17,15 @@ const styles = theme => ({
     fontSize: '3.5vw'
   },
   buttonLabel: {
-    fontSize: '4.5vw'
+    fontSize: '2.5vw'
   }
 });
 
 class VotePage extends React.Component {
   state = {
     id: '',
-    selected: ''
+    selected: '',
+    vote: false
   }
 
   // grabs the last 20 characters from the url to get ID to load from firebase
@@ -34,6 +35,20 @@ class VotePage extends React.Component {
     this.props.startSetOptions(id);
   };
 
+  // checks localstorage to see if youve voted on this poll before
+  componentDidMount() {
+    try {
+      const voted = localStorage.getItem('id')
+      if (voted === this.state.id) {
+        this.setState({vote: true})
+      } else {
+        this.setState({vote: false})
+      }
+    } catch (e) {
+      // Do nothing
+    }
+  }
+
   // takes the selected radio button and sets them equal to selected state
   handleChange = (e) => {
     const selected = e.target.value
@@ -42,11 +57,17 @@ class VotePage extends React.Component {
 
   // Passes this.state.selected to update firebase
   handleOnSubmit = (e) => {
-    e.preventDefault();
-    this.props.startUpdateOptions(this.state.selected, this.state.id)
-    setTimeout(() => {
+    if (this.state.vote === false) {
+      e.preventDefault();
+      this.props.startUpdateOptions(this.state.selected, this.state.id)
+      localStorage.setItem('id', this.state.id)
+      setTimeout(() => {
+        this.props.history.push(`/resultspage/${this.state.id}`);
+      }, 200);
+    } else {
+      alert(`You have already voted on this poll, continue to results`)
       this.props.history.push(`/resultspage/${this.state.id}`);
-    }, 200);
+    }
   };
 
   render() {
@@ -64,10 +85,11 @@ class VotePage extends React.Component {
             <Typography style={{marginTop: '50px', fontSize: '5.5vw'}}>{this.props.question}</Typography>
             <form onSubmit={this.handleOnSubmit}>
                 {/* Maps out the options that were pulled from firebase then added to redux with radio buttons and labels */}
+                <Paper>
                   <FormGroup style={{marginTop: '50px'}}>
-                    {this.props.options.map((option, idx) => (
-                      <div key={idx}>
-                        <FormControlLabel classes={{label: classes.radioLabel}} control={
+                      {this.props.options.map((option, idx) => (
+                      <div key={idx} id='form-div'>
+                        <FormControlLabel style={{padding: '10px'}} classes={{label: classes.radioLabel}} control={
                             <Radio 
                             type='radio' 
                             value={option.firebaseIndex} 
@@ -78,8 +100,9 @@ class VotePage extends React.Component {
                         />
                       </div>
                     ))}
-                <Button style={{marginTop: '15px'}} classes={{label: classes.buttonLabel}} type='submit'>Submit</Button>
-                </FormGroup>
+                    <Button style={{paddingTop: '15px'}} classes={{label: classes.buttonLabel}} type='submit'>Submit</Button>
+                  </FormGroup>
+                </Paper>
             </form>
           </Grid>
         </div>
@@ -101,7 +124,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(VotePage));
 
-
-// Only let people vote once by adding a value into local storage for that particular poll (last thing since testing easier without)
-
+// BUG Turn localstorage id into an object to add more ids too so people cant go to a different poll vote then come back and vote again
 // BUG if visiting invald votepage url doesn't push to notfoundpage
+
+// TODO change radio button to something nicer looking
