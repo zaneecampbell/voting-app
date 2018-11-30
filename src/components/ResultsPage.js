@@ -14,7 +14,7 @@ const styles = theme => ({
     marginTop: '50px',
     paddingLeft: '20px',
     paddingRight: '20px',
-    textAlign: 'right'
+    textAlign: 'left'
   }
 })
 
@@ -51,7 +51,7 @@ export class ResultsPage extends React.Component {
     }, 1000)
   }
 
-  // clears piechart updating (no memory leak!)
+  // clears piechart updating when you leave (no memory leak!)
   componentWillUnmount() {
     clearInterval(this.pieChartUpdater)
   }
@@ -77,11 +77,10 @@ export class ResultsPage extends React.Component {
                   </div>
                 ))
               }
-            </Paper>
-            <VictoryPie
+              <VictoryPie
               data={this.state.data}
             />
-            <button onClick={this.cheat}>Cheat</button>
+            </Paper>
         </Grid>
       </div>
     )
