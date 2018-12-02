@@ -57,16 +57,21 @@ class VotePage extends React.Component {
 
   // Passes this.state.selected to update firebase
   handleOnSubmit = (e) => {
-    if (this.state.vote === false) {
-      e.preventDefault();
-      this.props.startUpdateOptions(this.state.selected, this.state.id)
-      localStorage.setItem('id', this.state.id)
-      setTimeout(() => {
+    if (this.state.selected) {
+      if (this.state.vote === false) {
+        e.preventDefault();
+        this.props.startUpdateOptions(this.state.selected, this.state.id)
+        localStorage.setItem('id', this.state.id)
+        setTimeout(() => {
+          this.props.history.push(`/resultspage/${this.state.id}`);
+        }, 200);
+      } else {
+        alert(`You have already voted on this poll, continue to results`)
         this.props.history.push(`/resultspage/${this.state.id}`);
-      }, 200);
+      }
     } else {
-      alert(`You have already voted on this poll, continue to results`)
-      this.props.history.push(`/resultspage/${this.state.id}`);
+      e.preventDefault();
+      alert('Pick a choice please')
     }
   };
 
