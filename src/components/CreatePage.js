@@ -80,7 +80,7 @@ class CreatePage extends React.Component {
         options: optionsArray
       });
 
-      // Takes user to the voting page with the unique ID for the question
+      // Takes user to the voting page with the unique ID for the question giving firebase a chance to update
       setTimeout(() => {
         this.props.history.push(`/votepage/${this.props.id}`);
       }, 200);
@@ -91,49 +91,49 @@ class CreatePage extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
         <Grid
         container
         direction="column"
         justify="space-between"
         alignItems="center"
-        spacing={40}
+        spacing={0}
         >
         <Grid item>
           <Header />
         </ Grid>
           <Grid item>
-            <form onSubmit={this.handleOnSubmit}>
-              <Input
-                classes={{root: classes.textfield}}
-                style={{marginTop: '50px', marginBottom: '50px'}}
-                type='text'
-                value={this.state.question}
-                placeholder='Question here'
-                autoComplete='off'
-                onInput={this.handleUpdateQuestion}
-              />
-              <div id='input-container'>
-                {/* Maps out option inputs dynamically as more are needed */}
-                {this.state.options.map((option, idx) => (
-                  <div key={idx}>
-                    <Input
-                      classes={{root: classes.textfield}}
-                      id={`${idx}`}
-                      type='text'
-                      value={option.option}
-                      placeholder={`Option ${idx + 1}`}
-                      onInput={this.handleAddOption}
-                      autoComplete='off'
-                    />
-                  </div>
-                ))}
-              </div>
-              <Button style={{marginTop: '15px'}} classes={{label: classes.buttonLabel}} type='submit'>Create</Button>
-            </form>
+            <Paper style={{padding: '10px'}}>
+              <form onSubmit={this.handleOnSubmit}>
+                <Input
+                  classes={{root: classes.textfield}}
+                  style={{marginTop: '50px', marginBottom: '50px'}}
+                  type='text'
+                  value={this.state.question}
+                  placeholder='Question here'
+                  autoComplete='off'
+                  onInput={this.handleUpdateQuestion}
+                />
+                <div id='input-container'>
+                  {/* Maps out option inputs dynamically as more are needed */}
+                  {this.state.options.map((option, idx) => (
+                    <div key={idx}>
+                      <Input
+                        classes={{root: classes.textfield}}
+                        id={`${idx}`}
+                        type='text'
+                        value={option.option}
+                        placeholder={`Option ${idx + 1}`}
+                        onInput={this.handleAddOption}
+                        autoComplete='off'
+                      />
+                    </div>
+                  ))}
+                </div>
+                <Button style={{marginTop: '15px'}} classes={{label: classes.buttonLabel}} type='submit'>Create</Button>
+              </form>
+            </Paper>
           </Grid>
         </Grid>
-      </div>
     )
   }
 };

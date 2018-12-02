@@ -15,6 +15,8 @@ const styles = theme => ({
     paddingLeft: '20px',
     paddingRight: '20px',
     textAlign: 'left'
+  },
+  gridContainer: {
   }
 })
 
@@ -34,7 +36,6 @@ export class ResultsPage extends React.Component {
   // enables a listener on component mount that keeps track of the vote count for each option in real time
   componentDidMount() {
     this.props.startRealTimeOptions(this.state.id, this.props.question);
-    console.log(this.props.options)
 
     // Updates the piechart in real time
     this.pieChartUpdater = setInterval(() => {
@@ -48,7 +49,7 @@ export class ResultsPage extends React.Component {
         }
       })
       this.setState({ data: optionsForData })
-    }, 1000)
+    }, 200)
   }
 
   // clears piechart updating when you leave (no memory leak!)
@@ -60,29 +61,48 @@ export class ResultsPage extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
         <Grid
+        classes={{container: classes.gridContainer}}
         container
-        direction="column"
-        justify="space-between"
+        direction="row"
+        justify="center"
         alignItems="center"
-        spacing={40}
+        spacing={0}
         >
-          <Typography style={{marginTop: '50px', fontSize: '5.5vw'}}>{this.props.question}</Typography>
+          <Grid item xs={12}>
+            <Typography style={{textAlign: 'center', marginTop: '50px', fontSize: '5.5vw'}}>{this.props.question}</Typography>
+          </Grid>
+          <Grid item xs={8}>
             <Paper className={classes.paper}>
-              {
-                this.props.options.map((option, idx) => (
-                  <div key={idx}>
-                    {option.option}: {option.count}
-                  </div>
-                ))
-              }
-              <VictoryPie
-              data={this.state.data}
-            />
+              <Grid         
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              spacing={16}
+              >
+                <Grid item md={6}>
+                  {
+                    this.props.options.map((option, idx) => (
+                      <div key={idx}>
+                        {option.option}: {option.count}
+                      </div>
+                    ))
+                  }
+                </Grid>
+                <Grid item md={6}>
+                  <VictoryPie
+                    colorScale={["red", "blue", "lime", "yellow", "fuchsia", "aqua", "gray", "white", "maroon", "green", "olive", "navy", "purple", "teal", "silver", "black"]}
+                    data={this.state.data}
+                    labelRadius={90}
+                    radius={200}
+                    style={{ labels: { fill: "black", fontSize: 20, fontWeight: "bold" } }}
+                  />
+                </Grid>
+              </Grid>
             </Paper>
+          </Grid>
         </Grid>
-      </div>
     )
   }
 }
@@ -103,5 +123,7 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ResultsPage));
 
 // Functionally Done
+
+// BUG on mobile when going back to a page adds a question mark at the end of the URL ruining redirect
 
 // Style piechart

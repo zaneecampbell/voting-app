@@ -70,6 +70,10 @@ class VotePage extends React.Component {
     }
   };
 
+  handleChangeVote = () => {
+    this.setState({ vote: false })
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -80,7 +84,7 @@ class VotePage extends React.Component {
           direction="column"
           justify="space-between"
           alignItems="center"
-          spacing={40}
+          spacing={0}
           >
             <Typography style={{marginTop: '50px', fontSize: '5.5vw'}}>{this.props.question}</Typography>
             <form onSubmit={this.handleOnSubmit}>
@@ -104,6 +108,7 @@ class VotePage extends React.Component {
                   </FormGroup>
                 </Paper>
             </form>
+            <Button onClick={this.handleChangeVote} style={{fontSize: '1vw', marginTop: '30px'}}>Vote Again Test Button</Button>
           </Grid>
         </div>
     )
