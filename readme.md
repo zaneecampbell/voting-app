@@ -13,6 +13,6 @@ yarn run dev-server,
 Open Browser,
 Go to: localhost:8080
 
-https://github.com/zaneecampbell/voting-app/blob/master/public/images/Vote%20App.PNG
-https://github.com/zaneecampbell/voting-app/blob/master/public/images/VotePage%201.png
-https://github.com/zaneecampbell/voting-app/blob/master/public/images/ResultsPage%203.png
+![vote app](https://user-images.githubusercontent.com/43912919/49347192-fb602980-f650-11e8-8674-511cd48cd75e.PNG)
+![votepage 1](https://user-images.githubusercontent.com/43912919/49347201-19c62500-f651-11e8-9f7e-f0363ff4f229.png)
+![resultspage 3](https://user-images.githubusercontent.com/43912919/49347210-2c405e80-f651-11e8-9108-ee6828f2ead1.png)
