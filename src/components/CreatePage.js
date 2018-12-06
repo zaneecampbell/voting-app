@@ -38,11 +38,19 @@ class CreatePage extends React.Component {
   handleAddOption = (e) => {
     const id = e.target.id
     const text = e.target.value
+    // I have no idea how this actually updates the textfield but it does, but seems you dont even need to concat text? Spent an 3 hours trying to understand
     this.setState({
       ...this.state.options[id].option.concat(text)
     });
 
     this.state.options[id].option = text
+    // This below also works I have no idea why spreading it allows me to do this
+
+    // this.setState({
+    //   ...this.state.options[id].option = text
+    // });
+
+    // End of not knowing how it works
 
     if (id == this.state.options.length - 1) {
       this.setState({ options: this.state.options.concat([{ option: '', count: 0 }]) });
