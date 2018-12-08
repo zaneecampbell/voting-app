@@ -28,7 +28,7 @@ export class ResultsPage extends React.Component {
 
   // on page load fetches voting data from firebase using the key from the url then sets the options
   componentWillMount() {
-    const id = window.location.href.slice(-20)
+    const id = window.location.href.replace(/\?/gi, '').slice(-20)
     this.setState({ id });
     this.props.startSetOptions(id);
   };

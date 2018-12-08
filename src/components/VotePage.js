@@ -30,7 +30,7 @@ class VotePage extends React.Component {
 
   // grabs the last 20 characters from the url to get ID to load from firebase
   componentWillMount() {
-    const id = window.location.href.slice(-20)
+    const id = window.location.href.replace(/\?/gi, '').slice(-20)
     this.setState({ id });
     this.props.startSetOptions(id);
   };
@@ -77,6 +77,7 @@ class VotePage extends React.Component {
 
   handleChangeVote = () => {
     this.setState({ vote: false })
+    console.log(this.state.id)
   }
 
   render() {
