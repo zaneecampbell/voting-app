@@ -123,7 +123,3 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ResultsPage));
 
 // Functionally Done
-
-// BUG on mobile when going back to a page adds a question mark at the end of the URL ruining redirect
-
-// Style piechart

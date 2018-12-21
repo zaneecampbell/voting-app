@@ -14,10 +14,16 @@ import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   radioLabel: {
-    fontSize: '3.5vw'
+    fontSize: '50px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '30px'
+    }
   },
   buttonLabel: {
-    fontSize: '2.5vw'
+    fontSize: '30px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '20px'
+    }
   }
 });
 
@@ -92,7 +98,7 @@ class VotePage extends React.Component {
           alignItems="center"
           spacing={0}
           >
-            <Typography style={{marginTop: '50px', fontSize: '5.5vw'}}>{this.props.question}</Typography>
+            <Typography style={{marginTop: '50px', fontSize: '50px'}}>{this.props.question}</Typography>
             <form onSubmit={this.handleOnSubmit}>
                 {/* Maps out the options that were pulled from firebase then added to redux with radio buttons and labels */}
                 <Paper>
@@ -114,7 +120,7 @@ class VotePage extends React.Component {
                   </FormGroup>
                 </Paper>
             </form>
-            <Button onClick={this.handleChangeVote} style={{fontSize: '1vw', marginTop: '30px'}}>Vote Again Test Button</Button>
+            <Button onClick={this.handleChangeVote} style={{fontSize: '20px', marginTop: '30px'}}>Vote Again Test Button</Button>
           </Grid>
         </div>
     )
@@ -138,7 +144,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(V
 // BUG Turn localstorage id into an object to add more ids too so people cant go to a different poll vote then come back and vote again
     // check in new object if id exists then set vote state to true or false based on that
 // BUG if visiting invald votepage url doesn't push to notfoundpage
-
-// TODO change radio button to something nicer looking
 
 // FUTURE set it based on IP address so people cant clear localstorage

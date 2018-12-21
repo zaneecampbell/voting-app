@@ -13,10 +13,16 @@ import { withStyles } from '@material-ui/core/styles';
 
 const styles = theme => ({
   textfield: {
-    fontSize: '3.5vw'
+    fontSize: '50px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '30px'
+  }
   },
   buttonLabel: {
-    fontSize: '2.5vw'
+    fontSize: '30px',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '20px'
+    }
   }
 });
 
