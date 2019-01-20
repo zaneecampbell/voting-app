@@ -2,9 +2,8 @@ Voting App built using React with React-Redux and React-Router, styled with Mate
 Uses firebase as a database for unique urls to share your polls with anyone.
 Results page vote count and Piechart update in realtime when someone new votes.
 BUGS are shown at the bottom of each component that they were found in.
-95% complete.
 
-LIVE DEMO: https://cool-poll.herokuapp.com/
+LIVE DEMO: https://cool-poll.herokuapp.com/ (may take a second to load as its hosted for free)
 
 or
 
