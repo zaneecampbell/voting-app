@@ -59,6 +59,7 @@ class CreatePage extends React.Component {
 
     // The code used to work this way I don't know why it worked this way so I eventually went back and fixed it. The above now works in a way I understand.
     // I have no idea how this actually updates the textfield but it does, but seems you dont even need to concat text? Spent an 3 hours trying to understand
+    // Best guess is spreading it out creates variables for each option which is then targeted by the setState call for the one id thats updated
     // this.setState({
     //   ...this.state.options[id].option.concat(text)
     // });
